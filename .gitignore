@@ -7,3 +7,4 @@ __pycache__
 Backup
 Datasets
 model/pytorch-gradual-warmup-lr
+training.yml

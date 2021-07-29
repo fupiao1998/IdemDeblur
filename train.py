@@ -1,3 +1,4 @@
+from glob import glob
 import os
 from config import Config 
 opt = Config('training.yml')
@@ -68,6 +69,10 @@ train_loader = DataLoader(dataset=train_dataset, batch_size=opt.OPTIM.BATCH_SIZE
 val_dataset = get_validation_data(val_dir, {'patch_size':opt.TRAINING.VAL_PS})
 val_loader = DataLoader(dataset=val_dataset, batch_size=16, shuffle=False, num_workers=8, drop_last=False, pin_memory=True)
 # stx()
+######### Backup codes #########
+utils.dir_utils.save_scripts(log_dir, scripts_to_save=glob('*.*'))
+utils.dir_utils.save_scripts(log_dir, scripts_to_save=glob('model/*.py', recursive=True))
+utils.dir_utils.save_scripts(log_dir, scripts_to_save=glob('utils/*.py', recursive=True))
 
 print('===> Start Epoch {} End Epoch {}'.format(start_epoch, opt.OPTIM.NUM_EPOCHS + 1))
 print('===> Loading datasets')
