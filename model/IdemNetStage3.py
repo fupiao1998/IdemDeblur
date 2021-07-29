@@ -236,8 +236,8 @@ def weight_init(m):
 class IdemNetStage3(nn.Module):
     def __init__(self):
         super(IdemNetStage3, self).__init__()
-        self.encoder = UEncoder_RNN_GRU().apply(weight_init)
-        self.decoder = UDecoder_cat_RNN_GRU().apply(weight_init)
+        self.encoder = UEncoder_RNN_GRU()
+        self.decoder = UDecoder_cat_RNN_GRU()
 
     def forward(self, input_img):
         for i in range(6):

@@ -97,8 +97,8 @@ for epoch in range(start_epoch, opt.OPTIM.NUM_EPOCHS + 1):
         restored_2 = model(restored_1[0].detach())
  
         # Compute loss at each stage
-        loss_char = (np.sum([criterion_char(restored_1[j], target) for j in range(len(restored_1))]) + np.sum([criterion_char(restored_2[j], target) for j in range(len(restored_2))]))/2
-        loss_edge = (np.sum([criterion_edge(restored_1[j], target) for j in range(len(restored_1))]) + np.sum([criterion_edge(restored_2[j], target) for j in range(len(restored_2))]))/2
+        loss_char = (criterion_char(restored_1[0], target) + criterion_char(restored_2[0], target))/2
+        loss_edge = (criterion_edge(restored_1[0], target) + criterion_edge(restored_2[0], target))/2
 
         loss_idem = criterion_char(restored_1[0], restored_2[0])
         loss = (loss_char) + (0.05*loss_edge) + (0.1*loss_idem)
