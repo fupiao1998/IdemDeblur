@@ -62,7 +62,6 @@ def compute_psnr(image_true, image_test, image_mask, data_range=None):
     err = np.sum((image_true - image_test) ** 2, dtype=np.float64) / np.sum(image_mask)
     return 10 * np.log10((data_range ** 2) / err)
 
-
 def compute_ssim(tar_img, prd_img, cr1):
     ssim_pre, ssim_map = structural_similarity(tar_img, prd_img, multichannel=True, gaussian_weights=True, use_sample_covariance=False, data_range = 1.0, full=True)
     ssim_map = ssim_map * cr1
@@ -93,8 +92,8 @@ datasets = ['RealBlur_J', 'RealBlur_R']
 
 for dataset in datasets:
 
-    file_path = os.path.join('results' , dataset)
-    gt_path = os.path.join('Datasets', dataset, 'test', 'target')
+    file_path = os.path.join('ours_best_idem_realblur' , dataset)
+    gt_path = os.path.join('Datasets/Deblur', dataset, 'target')
 
     path_list = natsorted(glob(os.path.join(file_path, '*.png')) + glob(os.path.join(file_path, '*.jpg')))
     gt_list = natsorted(glob(os.path.join(gt_path, '*.png')) + glob(os.path.join(gt_path, '*.jpg')))

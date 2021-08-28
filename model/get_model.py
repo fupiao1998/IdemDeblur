@@ -1,5 +1,5 @@
 from warmup_scheduler import GradualWarmupScheduler
-from model.IdemNetStage3 import IdemNetStage3
+from model.IdemNetStage3 import IdemNetStage3, IdemNetStage3NotShare
 from model.IdemNetStage4 import IdemNetStage4
 import torch.optim as optim
 import utils
@@ -14,6 +14,8 @@ def get_model_and_optim(opt, model_dir):
         model = IdemNetStage3().cuda()
     elif name.lower() == 'idemnetstage4':
         model = IdemNetStage4().cuda()
+    elif name.lower() == 'idemnetstage3notshare':
+        model = IdemNetStage3NotShare().cuda()
     else:
         print('[ERROR]: NotImplementednt!')
         exit()
@@ -42,3 +44,18 @@ def get_model_and_optim(opt, model_dir):
         print('------------------------------------------------------------------------------')
 
     return model, optimizer, scheduler, start_epoch
+
+
+def get_model(name):
+    if name.lower() == 'idemnetstage3':
+        model = IdemNetStage3().cuda()
+    elif name.lower() == 'idemnetstage4':
+        model = IdemNetStage4().cuda()
+    elif name.lower() == 'idemnetstage3notshare':
+        model = IdemNetStage3NotShare().cuda()
+    else:
+        print('[ERROR]: NotImplementednt!')
+        exit()
+    print("[INFO]: There are {:.3f}M parameters".format(sum(param.numel() for param in model.parameters()) / 10**6))
+
+    return model

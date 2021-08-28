@@ -238,7 +238,7 @@ class IdemNetStage3(nn.Module):
         super(IdemNetStage3, self).__init__()
         self.encoder = UEncoder_RNN_GRU()
         self.decoder = UDecoder_cat_RNN_GRU()
-
+ 
     def forward(self, input_img):
         for i in range(6):
             if i == 0:
@@ -260,3 +260,53 @@ class IdemNetStage3(nn.Module):
             return [deblur_result[-1]]
         else:
             return [deblur_result]
+
+
+class IdemNetStage3NotShare(nn.Module):
+    def __init__(self):
+        super(IdemNetStage3NotShare, self).__init__()
+        self.encoder_1 = UEncoder_RNN_GRU()
+        self.decoder_1 = UDecoder_cat_RNN_GRU()
+
+        self.encoder_2 = UEncoder_RNN_GRU()
+        self.decoder_2 = UDecoder_cat_RNN_GRU()
+
+        self.encoder_3 = UEncoder_RNN_GRU()
+        self.decoder_3 = UDecoder_cat_RNN_GRU()
+
+        self.encoder_4 = UEncoder_RNN_GRU()
+        self.decoder_4 = UDecoder_cat_RNN_GRU()
+
+        self.encoder_5 = UEncoder_RNN_GRU()
+        self.decoder_5 = UDecoder_cat_RNN_GRU()
+
+        self.encoder_6 = UEncoder_RNN_GRU()
+        self.decoder_6 = UDecoder_cat_RNN_GRU()
+
+    def forward(self, input_img):
+        # import pdb; pdb.set_trace()
+        deblur_feature_1 = self.encoder_1([None, None, None, input_img])
+        deblur_result_1 = self.decoder_1(deblur_feature_1)
+        deblur_result_1[-1] += input_img
+
+        deblur_feature_2 = self.encoder_2(deblur_result_1)
+        deblur_result_2 = self.decoder_2(deblur_feature_2)
+        deblur_result_2[-1] += input_img
+
+        deblur_feature_3 = self.encoder_3(deblur_result_2)
+        deblur_result_3 = self.decoder_3(deblur_feature_3)
+        deblur_result_3[-1] += input_img
+
+        deblur_feature_4 = self.encoder_4(deblur_result_3)
+        deblur_result_4 = self.decoder_4(deblur_feature_4)
+        deblur_result_4[-1] += input_img
+
+        deblur_feature_5 = self.encoder_5(deblur_result_4)
+        deblur_result_5 = self.decoder_5(deblur_feature_5)
+        deblur_result_5[-1] += input_img
+
+        deblur_feature_6 = self.encoder_6(deblur_result_5)
+        deblur_result_6 = self.decoder_6(deblur_feature_6)
+        deblur_result_6[-1] += input_img
+
+        return [deblur_result_6[-1]]
